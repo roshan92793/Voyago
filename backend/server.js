@@ -2,19 +2,30 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
+
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// Connect MongoDB
+connectDB();
+
+// Routes
+app.use("/api/auth", authRoutes);
+
+// Test route
 app.get("/", (req, res) => {
     res.json({
         success: true,
-        message: "Voyago API is running"
+        message: "Welcome to Voyago API 🌍"
     });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
     console.log(`Voyago server running on port ${PORT}`);
