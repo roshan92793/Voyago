@@ -1,0 +1,172 @@
+.dest-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  cursor: default;
+}
+.dest-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(108,99,255,0.1);
+}
+
+/* Image */
+.dest-card__img-wrap {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+.dest-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.dest-card:hover .dest-card__img { transform: scale(1.06); }
+
+.dest-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13,13,26,0.7) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Wishlist */
+.dest-card__wishlist {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(13,13,26,0.6);
+  backdrop-filter: blur(8px);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  z-index: 2;
+}
+.dest-card__wishlist:hover { transform: scale(1.15); background: rgba(13,13,26,0.85); }
+.dest-card__wishlist--active { background: rgba(255,101,132,0.2); }
+
+/* Tags */
+.dest-card__tags {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  display: flex;
+  gap: 0.4rem;
+  z-index: 2;
+}
+.dest-card__tag {
+  padding: 0.2rem 0.6rem;
+  background: rgba(108,99,255,0.75);
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.04em;
+}
+
+/* Difficulty */
+.dest-card__difficulty {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 700;
+  z-index: 2;
+}
+.dest-card__difficulty--easy { background: rgba(67,233,123,0.8); color: #0a3520; }
+.dest-card__difficulty--moderate { background: rgba(248,168,75,0.8); color: #3d2700; }
+.dest-card__difficulty--challenging { background: rgba(255,101,132,0.8); color: #3d0010; }
+
+/* Body */
+.dest-card__body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+}
+
+.dest-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.dest-card__name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.dest-card__location {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0.15rem 0 0;
+}
+
+.dest-card__price { text-align: right; flex-shrink: 0; }
+.dest-card__price-from { display: block; font-size: 0.7rem; color: var(--text-muted); }
+.dest-card__price-val {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dest-card__desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+
+/* Rating */
+.dest-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.dest-card__rating-val { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
+.dest-card__rating-count { font-size: 0.75rem; color: var(--text-muted); }
+
+/* Meta */
+.dest-card__meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* CTA */
+.dest-card__cta {
+  display: inline-flex;
+  align-items: center;
+  margin-top: auto;
+  padding: 0.6rem 1.25rem;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-full);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition-fast);
+  text-align: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(108,99,255,0.3);
+}
+.dest-card__cta:hover { color: #fff; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(108,99,255,0.45); }

@@ -1,0 +1,81 @@
+// Mock trips data
+export const trips = [
+  {
+    id: 1,
+    userId: "user_1",
+    title: "Greek Island Hopping",
+    destinations: ["Santorini", "Mykonos", "Rhodes"],
+    startDate: "2026-09-15",
+    endDate: "2026-09-29",
+    status: "upcoming",
+    budget: {
+      total: 4500,
+      spent: 1200,
+      currency: "USD",
+      breakdown: {
+        accommodation: 2000,
+        flights: 1200,
+        food: 600,
+        activities: 500,
+        transport: 200,
+      },
+    },
+    coverImage: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=800&q=80",
+    notes: "Book ferry tickets in advance. Pack light for island hopping.",
+    itinerary: [
+      { day: 1, date: "2026-09-15", activities: ["Arrive in Athens", "Check in hotel", "Explore Plaka"] },
+      { day: 2, date: "2026-09-16", activities: ["Acropolis visit", "Ferry to Santorini"] },
+      { day: 3, date: "2026-09-17", activities: ["Oia exploration", "Sunset viewing"] },
+    ],
+  },
+  {
+    id: 2,
+    userId: "user_1",
+    title: "Southeast Asia Adventure",
+    destinations: ["Bali", "Bangkok", "Chiang Mai"],
+    startDate: "2026-07-01",
+    endDate: "2026-07-21",
+    status: "completed",
+    budget: {
+      total: 3000,
+      spent: 2750,
+      currency: "USD",
+      breakdown: {
+        accommodation: 900,
+        flights: 800,
+        food: 450,
+        activities: 400,
+        transport: 200,
+      },
+    },
+    coverImage: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+    notes: "Visa on arrival for Bali. Book temples early.",
+    itinerary: [],
+  },
+  {
+    id: 3,
+    userId: "user_1",
+    title: "Japan Cherry Blossom",
+    destinations: ["Tokyo", "Kyoto", "Osaka"],
+    startDate: "2027-03-25",
+    endDate: "2027-04-10",
+    status: "planning",
+    budget: {
+      total: 6000,
+      spent: 0,
+      currency: "USD",
+      breakdown: {
+        accommodation: 2500,
+        flights: 2000,
+        food: 800,
+        activities: 500,
+        transport: 200,
+      },
+    },
+    coverImage: "https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=800&q=80",
+    notes: "Book JR Pass before departure. Cherry blossom dates vary by year.",
+    itinerary: [],
+  },
+];
+
+export const tripStatuses = ["planning", "upcoming", "ongoing", "completed", "cancelled"];

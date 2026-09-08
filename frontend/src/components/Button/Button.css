@@ -1,0 +1,82 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Variants */
+.btn--primary {
+  background: var(--gradient-primary);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(108,99,255,0.35);
+}
+.btn--primary:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(108,99,255,0.5);
+}
+
+.btn--secondary {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+.btn--secondary:not(:disabled):hover { border-color: var(--border-hover); background: var(--surface); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.btn--ghost:not(:disabled):hover { background: var(--border-light); color: var(--text-primary); }
+
+.btn--outline {
+  background: transparent;
+  color: var(--primary-light);
+  border: 1.5px solid var(--primary);
+}
+.btn--outline:not(:disabled):hover { background: rgba(108,99,255,0.1); }
+
+.btn--danger {
+  background: rgba(255,101,132,0.15);
+  color: #ff6584;
+  border: 1px solid rgba(255,101,132,0.3);
+}
+.btn--danger:not(:disabled):hover { background: rgba(255,101,132,0.25); }
+
+.btn--warm {
+  background: var(--gradient-warm);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(248,168,75,0.35);
+}
+.btn--warm:not(:disabled):hover { transform: translateY(-2px); }
+
+/* Sizes */
+.btn--sm  { padding: 0.4rem 1rem;  font-size: 0.8rem; }
+.btn--md  { padding: 0.65rem 1.5rem; font-size: 0.9rem; }
+.btn--lg  { padding: 0.85rem 2rem; font-size: 1rem; }
+.btn--xl  { padding: 1rem 2.5rem;  font-size: 1.05rem; }
+
+/* Icon */
+.btn__icon { display: flex; align-items: center; font-size: 1.1em; }
+
+/* Spinner */
+.btn--loading { cursor: wait; }
+.btn__spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}

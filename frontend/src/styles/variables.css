@@ -1,0 +1,66 @@
+/* ─────────────────────────────────────────
+   Voyago – CSS Variables
+───────────────────────────────────────── */
+
+:root {
+  /* Brand Colors */
+  --primary:        #6C63FF;
+  --primary-dark:   #5548E0;
+  --primary-light:  #A29BFE;
+  --secondary:      #FF6584;
+  --accent:         #43E97B;
+  --accent-warm:    #F8A84B;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #6C63FF 0%, #a78bfa 100%);
+  --gradient-hero:    linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  --gradient-card:    linear-gradient(135deg, rgba(108,99,255,0.12) 0%, rgba(167,139,250,0.06) 100%);
+  --gradient-warm:    linear-gradient(135deg, #f8a84b 0%, #ff6584 100%);
+  --gradient-green:   linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+
+  /* Neutrals */
+  --bg:             #0d0d1a;
+  --bg-elevated:    #13132b;
+  --bg-card:        #1a1a35;
+  --bg-glass:       rgba(26, 26, 53, 0.7);
+  --surface:        #1e1e3f;
+
+  /* Text */
+  --text-primary:   #f0f0ff;
+  --text-secondary: #9898c8;
+  --text-muted:     #5c5c8a;
+
+  /* Borders */
+  --border:         rgba(108, 99, 255, 0.2);
+  --border-light:   rgba(255, 255, 255, 0.06);
+  --border-hover:   rgba(108, 99, 255, 0.5);
+
+  /* Shadows */
+  --shadow-sm:   0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md:   0 8px 24px rgba(0,0,0,0.4);
+  --shadow-lg:   0 16px 48px rgba(0,0,0,0.5);
+  --shadow-glow: 0 0 30px rgba(108,99,255,0.3);
+
+  /* Typography */
+  --font-heading: 'Outfit', sans-serif;
+  --font-body:    'Inter', sans-serif;
+
+  /* Spacing */
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  20px;
+  --radius-xl:  32px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast:   all 0.15s ease;
+  --transition-normal: all 0.25s ease;
+  --transition-slow:   all 0.4s ease;
+
+  /* Z-index layers */
+  --z-base:    1;
+  --z-dropdown: 100;
+  --z-modal:   200;
+  --z-toast:   300;
+  --z-nav:     400;
+}

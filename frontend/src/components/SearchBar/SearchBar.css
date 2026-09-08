@@ -1,0 +1,90 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 680px;
+}
+
+.search-bar__inner {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar__icon {
+  position: absolute;
+  left: 1.1rem;
+  font-size: 1rem;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.search-bar__input {
+  width: 100%;
+  padding: 0.9rem 1rem 0.9rem 3rem;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  transition: var(--transition-fast);
+  -webkit-appearance: none;
+}
+.search-bar__input::placeholder { color: var(--text-muted); }
+.search-bar__input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+}
+
+.search-bar__clear {
+  position: absolute;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 0.25rem;
+  transition: var(--transition-fast);
+}
+.search-bar__clear:hover { color: var(--text-primary); }
+
+.search-bar__btn {
+  padding: 0.9rem 1.75rem;
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: var(--radius-full);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(108,99,255,0.4);
+  flex-shrink: 0;
+}
+.search-bar__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(108,99,255,0.55);
+}
+
+/* Hero variant */
+.search-bar--hero .search-bar__input {
+  padding: 1.1rem 1rem 1.1rem 3.2rem;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+}
+.search-bar--hero .search-bar__btn {
+  padding: 1.1rem 2rem;
+  font-size: 1rem;
+}
+
+@media (max-width: 480px) {
+  .search-bar { flex-direction: column; }
+  .search-bar__btn { width: 100%; }
+}
