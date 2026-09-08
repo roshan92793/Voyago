@@ -5,6 +5,9 @@ require("dotenv").config();
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const destinationRoutes = require("./routes/destinationRoutes");
+const blogRoutes = require("./routes/blogRoutes");
+const tripRoutes = require("./routes/tripRoutes");
+const itineraryRoutes = require("./routes/itineraryRoutes");
 const app = express();
 
 // Middleware
@@ -18,6 +21,10 @@ connectDB();
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/destinations", destinationRoutes);
+app.use("/api/blogs", blogRoutes);
+app.use("/api/trip", tripRoutes);
+app.use("/api/itineraries", itineraryRoutes);
+
 // Test route
 app.get("/", (req, res) => {
     res.json({
