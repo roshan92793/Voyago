@@ -1,5 +1,5 @@
 const express = require("express");
-
+const adminMiddleware = require("../middleware/adminMiddleware");
 const {
     createDestination,
     getDestinations,
@@ -16,10 +16,25 @@ router.get("/", getDestinations);
 
 router.get("/:id", getDestinationById);
 
-router.post("/", authMiddleware, createDestination);
+router.post(
+    "/",
+    authMiddleware,
+    adminMiddleware,
+    createDestination
+);
 
-router.put("/:id", authMiddleware, updateDestination);
+router.put(
+    "/:id",
+    authMiddleware,
+    adminMiddleware,
+    updateDestination
+);
 
-router.delete("/:id", authMiddleware, deleteDestination);
+router.delete(
+    "/:id",
+    authMiddleware,
+    adminMiddleware,
+    deleteDestination
+);
 
 module.exports = router;
