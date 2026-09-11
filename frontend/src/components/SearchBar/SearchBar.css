@@ -37,7 +37,7 @@
   outline: none;
   border-color: var(--primary);
   background: rgba(255,255,255,0.08);
-  box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+  box-shadow: 0 0 0 3px rgba(0,188,212,0.15);
 }
 
 .search-bar__clear {
@@ -64,12 +64,12 @@
   cursor: pointer;
   transition: var(--transition-fast);
   white-space: nowrap;
-  box-shadow: 0 4px 15px rgba(108,99,255,0.4);
+  box-shadow: 0 4px 15px rgba(0,180,212,0.4);
   flex-shrink: 0;
 }
 .search-bar__btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(108,99,255,0.55);
+  box-shadow: 0 8px 25px rgba(0,180,212,0.55);
 }
 
 /* Hero variant */

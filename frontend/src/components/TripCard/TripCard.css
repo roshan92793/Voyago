@@ -52,6 +52,6 @@
   display: inline-flex; align-items: center; justify-content: center;
 }
 .trip-card__btn--primary { background: var(--gradient-primary); color: #fff; }
-.trip-card__btn--primary:hover { color: #fff; box-shadow: 0 4px 15px rgba(108,99,255,0.4); }
+.trip-card__btn--primary:hover { color: #fff; box-shadow: 0 4px 15px rgba(0,180,212,0.4); }
 .trip-card__btn--danger { background: rgba(255,101,132,0.12); color: #ff6584; border: 1px solid rgba(255,101,132,0.25); }
 .trip-card__btn--danger:hover { background: rgba(255,101,132,0.2); }
