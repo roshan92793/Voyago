@@ -18,8 +18,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(108,99,255,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(108,99,255,0.06) 1px, transparent 1px);
+    linear-gradient(rgba(0, 153, 204, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 153, 204, 0.08) 1px, transparent 1px);
   background-size: 60px 60px;
   mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
 }
@@ -32,19 +32,19 @@
 }
 .hero__orb--1 {
   width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(108,99,255,0.35) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 188, 212, 0.28) 0%, transparent 70%);
   top: -10%; left: -5%;
   animation-delay: 0s;
 }
 .hero__orb--2 {
   width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(255,101,132,0.25) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 224, 102, 0.28) 0%, transparent 70%);
   top: 20%; right: -5%;
   animation-delay: -2s;
 }
 .hero__orb--3 {
   width: 300px; height: 300px;
-  background: radial-gradient(circle, rgba(67,233,123,0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 212, 184, 0.2) 0%, transparent 70%);
   bottom: 10%; left: 30%;
   animation-delay: -4s;
 }
@@ -66,8 +66,8 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 1rem;
-  background: rgba(108,99,255,0.1);
-  border: 1px solid rgba(108,99,255,0.3);
+  background: rgba(0, 188, 212, 0.1);
+  border: 1px solid rgba(0, 188, 212, 0.3);
   border-radius: var(--radius-full);
   font-size: 0.85rem;
   font-weight: 600;
@@ -113,7 +113,7 @@
   transition: var(--transition-fast);
 }
 .hero__tag:hover {
-  background: rgba(108,99,255,0.12);
+  background: rgba(0, 188, 212, 0.12);
   border-color: var(--border-hover);
   color: var(--primary-light);
   transform: translateY(-2px);

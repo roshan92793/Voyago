@@ -1,10 +1,14 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer/Footer';
 
 const MainLayout = () => {
+  const { pathname } = useLocation();
+  const isAuthPage = ['/login', '/register'].includes(pathname);
+
   return (
     <>
+      {!isAuthPage && <div className="site-sun" aria-hidden="true" />}
       <Navbar />
       <main style={{ flex: 1 }}>
         <Outlet />
