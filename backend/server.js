@@ -10,7 +10,7 @@ const tripRoutes = require("./routes/tripRoutes");
 const itineraryRoutes = require("./routes/itineraryRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
-const budgetRoutes = require("./routes/budgetRoutes");
+const budgetRoutes = require("./routes/budgetRoute");
 const errorMiddleware = require("./middleware/errorMiddleware");
 
 const app = express();
@@ -45,6 +45,6 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, () => {
+app.listen(PORT,"0.0.0.0", () => {
     console.log(`Voyago server running on port ${PORT}`);
 });
