@@ -55,7 +55,6 @@ const Login = () => {
             value={form.email}
             onChange={handleChange}
             placeholder="you@example.com"
-            icon="📧"
             required
           />
           <Input
@@ -89,7 +88,7 @@ const Login = () => {
 
         {/* Demo hint */}
         <div className="auth__demo">
-          <span>🧪 Demo:</span> any email + password works when backend is running
+          <span>🔐 Sign in:</span> use the email and password you created during registration.
         </div>
       </div>
     </div>

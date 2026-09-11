@@ -7,13 +7,13 @@ const Destination = require("../models/destination");
 // ==========================================
 const createReview = async (req, res) => {
   try {
-    const { destination, rating, comment } = req.body;
+    const { destination, destinationKey, rating, comment } = req.body;
 
     // Check required fields
-    if (!destination || !rating || !comment) {
+    if ((!destination && !destinationKey) || !rating || !comment) {
       return res.status(400).json({
         success: false,
-        message: "Destination, rating and comment are required",
+        message: "A destination, rating and comment are required",
       });
     }
 
@@ -26,19 +26,20 @@ const createReview = async (req, res) => {
     }
 
     // Check destination exists
-    const destinationExists = await Destination.findById(destination);
-
-    if (!destinationExists) {
-      return res.status(404).json({
-        success: false,
-        message: "Destination not found",
-      });
+    if (destination) {
+      const destinationExists = await Destination.findById(destination);
+      if (!destinationExists) {
+        return res.status(404).json({
+          success: false,
+          message: "Destination not found",
+        });
+      }
     }
 
     // Check if user already reviewed this destination
     const existingReview = await Review.findOne({
       user: req.user.userId,
-      destination,
+      ...(destination ? { destination } : { destinationKey: String(destinationKey) }),
     });
 
     if (existingReview) {
@@ -51,7 +52,7 @@ const createReview = async (req, res) => {
     // Create review
     const review = await Review.create({
       user: req.user.userId,
-      destination,
+      ...(destination ? { destination } : { destinationKey: String(destinationKey) }),
       rating,
       comment,
     });
@@ -86,9 +87,10 @@ const getDestinationReviews = async (req, res) => {
   try {
     const { destinationId } = req.params;
 
-    const reviews = await Review.find({
-      destination: destinationId,
-    })
+    const isObjectId = /^[a-fA-F0-9]{24}$/.test(destinationId);
+    const reviews = await Review.find(
+      isObjectId ? { destination: destinationId } : { destinationKey: destinationId }
+    )
       .populate("user", "name")
       .populate("destination", "name")
       .sort({ createdAt: -1 });
@@ -119,6 +121,25 @@ const getDestinationReviews = async (req, res) => {
       message: "Server error",
       error: error.message,
     });
+  }
+};
+
+
+// ==========================================
+// GET ALL REVIEWS
+// GET /api/reviews
+// ==========================================
+const getAllReviews = async (req, res) => {
+  try {
+    const reviews = await Review.find()
+      .populate("user", "name")
+      .populate("destination", "name")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({ success: true, count: reviews.length, reviews });
+  } catch (error) {
+    console.error("Get all reviews error:", error);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
@@ -233,6 +254,7 @@ const deleteReview = async (req, res) => {
 
 module.exports = {
   createReview,
+  getAllReviews,
   getDestinationReviews,
   updateReview,
   deleteReview,

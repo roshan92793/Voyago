@@ -1,14 +1,19 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../../components/Hero/Hero';
 import DestinationCard from '../../components/DestinationCard/DestinationCard';
 import ReviewCard from '../../components/ReviewCard/ReviewCard';
 import { destinations } from '../../data/destinations';
-import { reviews } from '../../data/reviews';
+import { reviewsAPI } from '../../services/api';
 import './Home.css';
 
 const Home = () => {
   const featured = destinations.filter((d) => d.isFeatured);
-  const topReviews = reviews.slice(0, 3);
+  const [topReviews, setTopReviews] = useState([]);
+
+  useEffect(() => {
+    reviewsAPI.getAll().then((response) => setTopReviews(response.data.reviews.slice(0, 3))).catch(() => {});
+  }, []);
 
   const features = [
     { icon: '🗺️', title: 'Smart Trip Planner', desc: 'Build day-by-day itineraries with budget tracking and packing lists — all in one dashboard.' },
@@ -106,8 +111,9 @@ const Home = () => {
             <Link to="/reviews" className="view-all-link">View All →</Link>
           </div>
           <div className="grid-3" style={{ marginTop: '2.5rem' }}>
-            {topReviews.map((r) => <ReviewCard key={r.id} review={r} />)}
+            {topReviews.map((r) => <ReviewCard key={r._id} review={r} />)}
           </div>
+          {topReviews.length === 0 && <p style={{ marginTop: '1.5rem', color: 'var(--text-muted)' }}>No community reviews yet. Be the first to share your experience.</p>}
         </div>
       </section>
 
