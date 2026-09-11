@@ -19,7 +19,8 @@ const Register = () => {
     const errs = {};
     if (!form.name.trim())   errs.name = 'Name is required';
     if (!form.email.includes('@')) errs.email = 'Valid email required';
-    if (form.password.length < 6) errs.password = 'Min 6 characters';
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(form.password))
+    errs.password = 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.';
     if (form.password !== form.confirm) errs.confirm = 'Passwords do not match';
     return errs;
   };
@@ -58,9 +59,14 @@ const Register = () => {
         {apiError && <div className="auth__error" role="alert">{apiError}</div>}
 
         <form onSubmit={handleSubmit} className="auth__form">
-          <Input id="name" label="Full Name" value={form.name} onChange={handleChange} placeholder="Jane Doe" icon="👤" error={errors.name} required />
-          <Input id="email" label="Email" type="email" value={form.email} onChange={handleChange} placeholder="you@example.com" icon="📧" error={errors.email} required />
-          <Input id="password" label="Password" type="password" value={form.password} onChange={handleChange} placeholder="Min 6 characters" icon="🔒" error={errors.password} required />
+          <Input id="name" label="Full Name" value={form.name} onChange={handleChange} placeholder="Your Name" error={errors.name} required />
+          <Input id="email" label="Email" type="email" value={form.email} onChange={handleChange} placeholder="your@gmail.com"  error={errors.email} required />
+          <div>
+            <Input id="password" label="Password" type="password" value={form.password} onChange={handleChange} placeholder="Create a strong password" icon="🔒" error={errors.password} required />
+            <p className="auth__password-hint">
+              Use 8+ characters with an uppercase letter, lowercase letter, number, and special character (for example, <code>Voyago@2026</code>).
+            </p>
+          </div>
           <Input id="confirm" label="Confirm Password" type="password" value={form.confirm} onChange={handleChange} placeholder="Repeat password" icon="🔒" error={errors.confirm} required />
           <Button id="register-submit-btn" type="submit" variant="primary" size="lg" loading={loading} style={{ width: '100%' }}>
             Create Account

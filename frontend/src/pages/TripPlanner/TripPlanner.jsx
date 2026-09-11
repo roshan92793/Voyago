@@ -12,7 +12,7 @@ const TripPlanner = () => {
     destinations: [],
     startDate: '',
     endDate: '',
-    budget: { total: 2000, currency: 'USD', spent: 0, breakdown: { accommodation: 0, flights: 0, food: 0, activities: 0, transport: 0 } },
+    budget: { total: 25000, currency: 'INR', spent: 0, breakdown: { accommodation: 0, flights: 0, food: 0, activities: 0, transport: 0 } },
     notes: '',
   });
   const [saved, setSaved] = useState(false);
@@ -64,7 +64,7 @@ const TripPlanner = () => {
             <div className="planner__panel animate-fade-in">
               <h2>Trip Details</h2>
               <div className="planner__form">
-                <Input id="title" label="Trip Title" value={form.title} onChange={handleChange} placeholder="e.g. Greek Island Hopping" icon="✈️" required />
+                <Input id="title" label="Trip Title" value={form.title} onChange={handleChange} placeholder="e.g. Kerala getaway" icon="✈️" required />
                 <div className="planner__row">
                   <Input id="startDate" label="Start Date" type="date" value={form.startDate} onChange={handleChange} required />
                   <Input id="endDate" label="End Date" type="date" value={form.endDate} onChange={handleChange} required />
@@ -121,7 +121,7 @@ const TripPlanner = () => {
               <h2>Set Budget</h2>
               <div className="planner__budget-inputs">
                 <div className="input-group">
-                  <label className="input-label" htmlFor="budget-total">Total Budget (USD)</label>
+                  <label className="input-label" htmlFor="budget-total">Total Budget (INR)</label>
                   <div className="input-wrapper">
                     <span className="input-icon">💰</span>
                     <input
@@ -137,7 +137,7 @@ const TripPlanner = () => {
                 {['accommodation', 'flights', 'food', 'activities', 'transport'].map((cat) => (
                   <div key={cat} className="input-group">
                     <label className="input-label" htmlFor={`budget-${cat}`}>
-                      {cat.charAt(0).toUpperCase() + cat.slice(1)} ($)
+                      {cat.charAt(0).toUpperCase() + cat.slice(1)} (₹)
                     </label>
                     <div className="input-wrapper">
                       <input
@@ -169,7 +169,7 @@ const TripPlanner = () => {
                 <div className="planner__review-item"><span>📋 Title</span><strong>{form.title || '—'}</strong></div>
                 <div className="planner__review-item"><span>📍 Destinations</span><strong>{form.destinations.join(', ') || '—'}</strong></div>
                 <div className="planner__review-item"><span>🗓 Dates</span><strong>{form.startDate} → {form.endDate}</strong></div>
-                <div className="planner__review-item"><span>💰 Budget</span><strong>${form.budget.total.toLocaleString()}</strong></div>
+                <div className="planner__review-item"><span>💰 Budget</span><strong>₹{form.budget.total.toLocaleString('en-IN')}</strong></div>
                 <div className="planner__review-item"><span>📝 Notes</span><strong>{form.notes || '—'}</strong></div>
               </div>
               {saved && <div className="planner__saved">✅ Trip saved successfully!</div>}

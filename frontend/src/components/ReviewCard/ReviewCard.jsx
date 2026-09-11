@@ -3,14 +3,17 @@ import './ReviewCard.css';
 
 const ReviewCard = ({ review }) => {
   const { full, half, empty } = getStars(review.rating);
+  const author = review.userName || review.user?.name || 'Voyago traveler';
+  const date = review.date || review.createdAt;
+  const content = review.content || review.comment;
   return (
-    <article className="review-card" id={`review-${review.id}`}>
+    <article className="review-card" id={`review-${review._id || review.id}`}>
       {/* Header */}
       <div className="review-card__header">
-        <img src={review.userAvatar} alt={review.userName} className="review-card__avatar" loading="lazy" />
+        <img src={review.userAvatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(author)}&background=0099cc&color=fff`} alt={author} className="review-card__avatar" loading="lazy" />
         <div className="review-card__meta">
-          <span className="review-card__name">{review.userName}</span>
-          <span className="review-card__date">{formatDate(review.date)}</span>
+          <span className="review-card__name">{author}</span>
+          <span className="review-card__date">{formatDate(date)}</span>
         </div>
         <div className="review-card__rating">
           <div className="stars" aria-label={`${review.rating} out of 5 stars`}>
@@ -21,8 +24,8 @@ const ReviewCard = ({ review }) => {
       </div>
 
       {/* Content */}
-      <h4 className="review-card__title">&ldquo;{review.title}&rdquo;</h4>
-      <p className="review-card__body">{truncate(review.content, 180)}</p>
+      {review.title && <h4 className="review-card__title">&ldquo;{review.title}&rdquo;</h4>}
+      <p className="review-card__body">{truncate(content, 180)}</p>
 
       {/* Tags */}
       {review.tags?.length > 0 && (
@@ -34,9 +37,7 @@ const ReviewCard = ({ review }) => {
       )}
 
       {/* Helpful */}
-      <div className="review-card__helpful">
-        <span>👍 {review.helpful} found this helpful</span>
-      </div>
+      {typeof review.helpful === 'number' && <div className="review-card__helpful"><span>👍 {review.helpful} found this helpful</span></div>}
     </article>
   );
 };

@@ -11,7 +11,12 @@ const reviewSchema = new mongoose.Schema(
     destination: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Destination",
-      required: true,
+    },
+
+    // Key for destinations supplied by the frontend's curated list.
+    destinationKey: {
+      type: String,
+      trim: true,
     },
 
     rating: {
@@ -33,9 +38,7 @@ const reviewSchema = new mongoose.Schema(
 );
 
 // One user can review a destination only once
-reviewSchema.index(
-  { user: 1, destination: 1 },
-  { unique: true }
-);
+reviewSchema.index({ user: 1, destination: 1 }, { unique: true, sparse: true });
+reviewSchema.index({ user: 1, destinationKey: 1 }, { unique: true, sparse: true });
 
 module.exports = mongoose.model("Review", reviewSchema);

@@ -11,7 +11,7 @@ const Explore = () => {
   const [continent, setContinent] = useState(searchParams.get('continent') || 'All');
   const [activeTag, setTag]     = useState(searchParams.get('tag') || 'All');
   const [sortBy, setSort]       = useState('rating');
-  const [priceMax, setPriceMax] = useState(5000);
+  const [priceMax, setPriceMax] = useState(50000);
 
   const filtered = useMemo(() => {
     let list = [...destinations];
@@ -33,7 +33,7 @@ const Explore = () => {
         <div className="explore__header-bg" />
         <div className="container explore__header-content">
           <h1>Explore <span className="text-gradient">Destinations</span></h1>
-          <p>Discover {destinations.length}+ handpicked destinations from every corner of the world.</p>
+          <p>Discover {destinations.length} handpicked destinations across India.</p>
           <SearchBar onSearch={setQuery} placeholder="Search destinations..." />
         </div>
       </div>
@@ -74,22 +74,22 @@ const Explore = () => {
           </div>
 
           <div className="filter-section">
-            <h4>Max Price: <strong style={{ color: 'var(--primary-light)' }}>${priceMax.toLocaleString()}</strong></h4>
+            <h4>Max Budget: <strong style={{ color: 'var(--primary-light)' }}>₹{priceMax.toLocaleString('en-IN')}</strong></h4>
             <input
               id="price-range-filter"
               type="range"
-              min={500} max={5000} step={100}
+              min={5000} max={50000} step={1000}
               value={priceMax}
               onChange={(e) => setPriceMax(+e.target.value)}
               className="price-range"
             />
-            <div className="price-range-labels"><span>$500</span><span>$5,000</span></div>
+            <div className="price-range-labels"><span>₹5,000</span><span>₹50,000</span></div>
           </div>
 
           <button
             id="reset-filters-btn"
             className="reset-btn"
-            onClick={() => { setQuery(''); setContinent('All'); setTag('All'); setSort('rating'); setPriceMax(5000); }}
+            onClick={() => { setQuery(''); setContinent('All'); setTag('All'); setSort('rating'); setPriceMax(50000); }}
           >
             Reset Filters
           </button>

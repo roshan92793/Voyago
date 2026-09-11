@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { destinations } from '../../data/destinations';
-import { reviews } from '../../data/reviews';
+import { formatCurrency, formatDate } from '../../utils';
+import { reviewsAPI } from '../../services/api';
 import { trips } from '../../data/trips';
 import './Admin.css';
 
@@ -12,6 +14,12 @@ const StatCard = ({ icon, label, value, color }) => (
 );
 
 const Admin = () => {
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    reviewsAPI.getAll().then((response) => setReviews(response.data.reviews)).catch(() => {});
+  }, []);
+
   const stats = [
     { icon: '🌍', label: 'Destinations', value: destinations.length, color: 'var(--primary)' },
     { icon: '⭐', label: 'Reviews', value: reviews.length, color: 'var(--accent-warm)' },
@@ -61,7 +69,7 @@ const Admin = () => {
                     </td>
                     <td>{d.country}</td>
                     <td><span style={{ color: 'var(--accent-warm)' }}>★ {d.rating}</span></td>
-                    <td>${d.price.toLocaleString()}</td>
+                    <td>{formatCurrency(d.price, d.currency)}</td>
                     <td>
                       <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
                         {d.tags.slice(0, 2).map((t) => <span key={t} className="admin__tag">{t}</span>)}
@@ -93,12 +101,12 @@ const Admin = () => {
               <tbody>
                 {reviews.map((r) => (
                   <tr key={r.id}>
-                    <td>{r.userName}</td>
-                    <td>{r.title}</td>
+                    <td>{r.user?.name || 'Voyago traveler'}</td>
+                    <td>{r.comment}</td>
                     <td><span style={{ color: 'var(--accent-warm)' }}>★ {r.rating}</span></td>
-                    <td>{r.date}</td>
+                    <td>{formatDate(r.createdAt)}</td>
                     <td>
-                      <button id={`admin-del-review-${r.id}`} className="admin__action-btn admin__action-btn--del">Delete</button>
+                      <button id={`admin-del-review-${r._id}`} className="admin__action-btn admin__action-btn--del">Delete</button>
                     </td>
                   </tr>
                 ))}
