@@ -22,11 +22,11 @@ const Home = () => {
     { icon: '💰', title: 'Budget Optimizer', desc: 'Track spending across categories and get smart suggestions to maximize your travel budget.' },
   ];
 
-  const continents = [
-    { name: 'Asia', emoji: '🏯', count: 180, img: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&q=80' },
-    { name: 'Europe', emoji: '🗼', count: 220, img: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400&q=80' },
-    { name: 'Americas', emoji: '🗽', count: 140, img: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400&q=80' },
-    { name: 'Africa', emoji: '🦁', count: 90, img: 'https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=400&q=80' },
+  const travelStyles = [
+    { name: 'Beach breaks', query: 'Beach', emoji: '🏖️', desc: 'Sun, sand and slow days', img: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=400&q=80' },
+    { name: 'Mountain escapes', query: 'Nature', emoji: '🏔️', desc: 'Cool air and wide views', img: 'https://images.unsplash.com/photo-1626621331169-5f34be280ed9?w=400&q=80' },
+    { name: 'Heritage trails', query: 'History', emoji: '🏛️', desc: 'Forts, food and old cities', img: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?w=400&q=80' },
+    { name: 'Adventure trips', query: 'Adventure', emoji: '🥾', desc: 'For weekends with a story', img: 'https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=400&q=80' },
   ];
 
   return (
@@ -72,19 +72,19 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Explore by Continent */}
+      {/* Explore by travel style */}
       <section className="section-padding home__continents">
         <div className="container">
           <div className="section-head text-center">
-            <div className="badge badge-success">🌍 Explore</div>
-            <h2 style={{ marginTop: '0.75rem' }}>Explore by <span className="text-gradient">Continent</span></h2>
+            <div className="badge badge-success">🌍 Explore India</div>
+            <h2 style={{ marginTop: '0.75rem' }}>Pick a trip by <span className="text-gradient">travel style</span></h2>
           </div>
           <div className="home__continent-grid" style={{ marginTop: '2.5rem' }}>
-            {continents.map((c) => (
+            {travelStyles.map((c) => (
               <Link
                 key={c.name}
-                to={`/explore?continent=${c.name}`}
-                id={`continent-${c.name.toLowerCase()}`}
+                to={`/explore?tag=${c.query}`}
+                id={`travel-style-${c.query.toLowerCase()}`}
                 className="continent-card"
               >
                 <img src={c.img} alt={c.name} loading="lazy" />
@@ -92,7 +92,7 @@ const Home = () => {
                 <div className="continent-card__info">
                   <span className="continent-card__emoji">{c.emoji}</span>
                   <h3>{c.name}</h3>
-                  <p>{c.count}+ destinations</p>
+                  <p>{c.desc}</p>
                 </div>
               </Link>
             ))}
