@@ -10,7 +10,7 @@ const tripRoutes = require("./routes/tripRoutes");
 const itineraryRoutes = require("./routes/itineraryRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
-const budgetRoutes = require("./routes/budgetRoutes");
+const budgetRoutes = require("./routes/budgetRoute");
 const errorMiddleware = require("./middleware/errorMiddleware");
 
 const app = express();
