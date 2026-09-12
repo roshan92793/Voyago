@@ -52,6 +52,7 @@ export const tripsAPI = {
 
 // ── Reviews ────────────────────────────────────
 export const reviewsAPI = {
+  getAll:           ()      => api.get('/reviews'),
   getByDestination: (destId) => api.get(`/reviews/destination/${destId}`),
   create:  (data)  => api.post('/reviews', data),
   delete:  (id)    => api.delete(`/reviews/${id}`),

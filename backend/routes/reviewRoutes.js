@@ -4,6 +4,7 @@ const router = express.Router();
 
 const {
   createReview,
+  getAllReviews,
   getDestinationReviews,
   updateReview,
   deleteReview,
@@ -14,6 +15,9 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 // Create review
 router.post("/", authMiddleware, createReview);
+
+// Get all submitted reviews
+router.get("/", getAllReviews);
 
 // Get all reviews for a destination
 router.get("/destination/:destinationId", getDestinationReviews);

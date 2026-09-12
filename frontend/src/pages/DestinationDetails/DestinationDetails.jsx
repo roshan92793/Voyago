@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { destinations } from '../../data/destinations';
-import { reviews } from '../../data/reviews';
 import ReviewCard from '../../components/ReviewCard/ReviewCard';
 import { useWishlist } from '../../hooks';
+import { useAuth } from '../../context/AuthContext';
+import { reviewsAPI } from '../../services/api';
 import { formatCurrency, getStars } from '../../utils';
 import Error from '../../components/Error/Error';
 import './DestinationDetails.css';
@@ -11,10 +13,39 @@ const DestinationDetails = () => {
   const { id } = useParams();
   const dest = destinations.find((d) => d.id === +id);
   const { isWishlisted, toggleWishlist } = useWishlist();
+  const { isAuthenticated } = useAuth();
+  const [destReviews, setDestReviews] = useState([]);
+  const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' });
+  const [reviewError, setReviewError] = useState('');
+  const [submittingReview, setSubmittingReview] = useState(false);
 
   if (!dest) return <Error code="404" title="Destination Not Found" message="This destination doesn't exist." />;
 
-  const destReviews = reviews.filter((r) => r.destinationId === dest.id);
+  const loadReviews = async () => {
+    try {
+      const response = await reviewsAPI.getByDestination(dest.id);
+      setDestReviews(response.data.reviews);
+    } catch {
+      setReviewError('Unable to load reviews. Please try again later.');
+    }
+  };
+
+  useEffect(() => { loadReviews(); }, [id]);
+
+  const handleReviewSubmit = async (event) => {
+    event.preventDefault();
+    setReviewError('');
+    setSubmittingReview(true);
+    try {
+      await reviewsAPI.create({ destinationKey: String(dest.id), rating: Number(reviewForm.rating), comment: reviewForm.comment });
+      setReviewForm({ rating: 5, comment: '' });
+      await loadReviews();
+    } catch (error) {
+      setReviewError(error.response?.data?.message || 'Could not submit your review.');
+    } finally {
+      setSubmittingReview(false);
+    }
+  };
   const { full, half, empty } = getStars(dest.rating);
   const wishlisted = isWishlisted(dest.id);
 
@@ -66,9 +97,22 @@ const DestinationDetails = () => {
           {/* Reviews */}
           <section className="dest-details__section">
             <h2>Traveler Reviews</h2>
+            {isAuthenticated && (
+              <form className="dest-details__review-form" onSubmit={handleReviewSubmit}>
+                <label htmlFor="review-rating">Your rating</label>
+                <select id="review-rating" value={reviewForm.rating} onChange={(event) => setReviewForm({ ...reviewForm, rating: event.target.value })}>
+                  {[5, 4, 3, 2, 1].map((rating) => <option key={rating} value={rating}>{rating} star{rating > 1 ? 's' : ''}</option>)}
+                </select>
+                <label htmlFor="review-comment">Share your experience</label>
+                <textarea id="review-comment" value={reviewForm.comment} onChange={(event) => setReviewForm({ ...reviewForm, comment: event.target.value })} minLength="10" required placeholder={`What did you enjoy about ${dest.name}?`} rows="3" />
+                {reviewError && <p className="dest-details__review-error" role="alert">{reviewError}</p>}
+                <button className="btn btn--primary btn--sm" type="submit" disabled={submittingReview}>{submittingReview ? 'Submitting…' : 'Post review'}</button>
+              </form>
+            )}
+            {!isAuthenticated && <p className="dest-details__review-login">Sign in to share your travel experience.</p>}
             {destReviews.length > 0 ? (
               <div className="dest-details__reviews">
-                {destReviews.map((r) => <ReviewCard key={r.id} review={r} />)}
+                {destReviews.map((r) => <ReviewCard key={r._id} review={r} />)}
               </div>
             ) : (
               <p style={{ color: 'var(--text-muted)' }}>No reviews yet. Be the first to review!</p>

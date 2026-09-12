@@ -189,6 +189,19 @@
   gap: 1rem;
 }
 
+.auth__password-hint {
+  margin: 0.4rem 0 0;
+  color: #6a8fa0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.auth__password-hint code {
+  color: #0099cc;
+  font-family: inherit;
+  font-weight: 600;
+}
+
 .auth__forgot {
   text-align: right;
 }
