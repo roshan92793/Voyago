@@ -44,13 +44,6 @@ const Register = () => {
 
   return (
     <div className="auth">
-      {/* Sun effect – top left */}
-      <div className="auth__sun" aria-hidden="true" />
-      {/* Sky cloud blobs */}
-      <div className="auth__cloud auth__cloud--1" aria-hidden="true" />
-      <div className="auth__cloud auth__cloud--2" aria-hidden="true" />
-      <div className="auth__cloud auth__cloud--3" aria-hidden="true" />
-
       <div className="auth__card">
         <div className="auth__logo">✈️ Voyago</div>
         <h1 className="auth__title">Create account</h1>

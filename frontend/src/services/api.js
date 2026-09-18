@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://192.168.1.12:5001/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -34,11 +34,15 @@ export const authAPI = {
   profile:  ()     => api.get('/auth/profile'),
 };
 
-// ── Destinations (placeholder for future backend) ──
+// ── Destinations ─────────────────────────────
 export const destinationsAPI = {
-  getAll:   (params) => api.get('/destinations', { params }),
-  getById:  (id)     => api.get(`/destinations/${id}`),
-  search:   (query)  => api.get('/destinations/search', { params: { q: query } }),
+  getAll:      (params) => api.get('/destinations', { params }),
+  getById:     (id)     => api.get(`/destinations/${id}`),
+  create:      (data)   => api.post('/destinations', data),
+  update:      (id, data) => api.put(`/destinations/${id}`, data),
+  delete:      (id)     => api.delete(`/destinations/${id}`),
+  fetchImages: (id)     => api.get(`/destinations/${id}/images`),
+  search:      (query)  => api.get('/destinations/search', { params: { q: query } }),
 };
 
 // ── Trips ──────────────────────────────────────
@@ -55,6 +59,7 @@ export const reviewsAPI = {
   getAll:           ()      => api.get('/reviews'),
   getByDestination: (destId) => api.get(`/reviews/destination/${destId}`),
   create:  (data)  => api.post('/reviews', data),
+  update:  (id, data) => api.put(`/reviews/${id}`, data),
   delete:  (id)    => api.delete(`/reviews/${id}`),
 };
 

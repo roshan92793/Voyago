@@ -1,4 +1,4 @@
-/* ── Register Page – Light Sky Blue Theme ── */
+/* ── Register Page – Dark Teal Glass Theme ── */
 
 .auth {
   min-height: 100vh;
@@ -7,11 +7,10 @@
   justify-content: center;
   padding: 6rem 1.5rem 2rem;
   position: relative;
-  background: linear-gradient(160deg, #e0f7ff 0%, #b8eaff 40%, #d4f3ff 70%, #f0fbff 100%);
+  background: linear-gradient(160deg, #021b22 0%, #0a2f37 25%, #0d3d49 50%, #071d24 100%);
   overflow: hidden;
 }
 
-/* ── Sun Effect (top-left) ── */
 .auth__sun {
   position: fixed;
   top: -80px;
@@ -29,7 +28,6 @@
   pointer-events: none;
 }
 
-/* Sun rays */
 .auth__sun::before {
   content: '';
   position: absolute;
@@ -66,57 +64,54 @@
 }
 
 @keyframes sunPulse {
-  0%, 100% { transform: scale(1);     box-shadow: 0 0 60px 30px rgba(255,200,0,0.35), 0 0 120px 60px rgba(255,180,0,0.2); }
-  50%       { transform: scale(1.06); box-shadow: 0 0 80px 40px rgba(255,200,0,0.45), 0 0 160px 80px rgba(255,180,0,0.28); }
+  0%, 100% { transform: scale(1); box-shadow: 0 0 60px 30px rgba(255,200,0,0.35), 0 0 120px 60px rgba(255,180,0,0.2); }
+  50% { transform: scale(1.06); box-shadow: 0 0 80px 40px rgba(255,200,0,0.45), 0 0 160px 80px rgba(255,180,0,0.28); }
 }
 
 @keyframes rotateSun {
   to { transform: rotate(360deg); }
 }
 
-/* ── Sky clouds (decorative blobs) ── */
 .auth__cloud {
   position: fixed;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
-  filter: blur(40px);
+  background: rgba(255, 255, 255, 0.14);
+  filter: blur(42px);
   pointer-events: none;
   z-index: 0;
 }
-.auth__cloud--1 { width: 300px; height: 150px; top: 15%; right: 5%;  animation: floatCloud 8s ease-in-out infinite; }
+.auth__cloud--1 { width: 300px; height: 150px; top: 15%; right: 5%; animation: floatCloud 8s ease-in-out infinite; }
 .auth__cloud--2 { width: 200px; height: 100px; top: 35%; right: 20%; animation: floatCloud 11s ease-in-out infinite reverse; }
 .auth__cloud--3 { width: 250px; height: 120px; bottom: 20%; left: 5%; animation: floatCloud 9s ease-in-out infinite 2s; }
 
 @keyframes floatCloud {
   0%, 100% { transform: translateX(0); }
-  50%       { transform: translateX(20px); }
+  50% { transform: translateX(20px); }
 }
 
-/* ── Card ── */
 .auth__card {
   position: relative;
   z-index: 1;
   width: 100%;
   max-width: 440px;
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(20px);
+  background: rgba(10, 31, 38, 0.78);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(125, 231, 245, 0.2);
   border-radius: 24px;
   padding: 2.5rem;
   box-shadow:
-    0 8px 32px rgba(0, 150, 200, 0.12),
-    0 2px 8px rgba(0, 180, 230, 0.08),
-    inset 0 1px 0 rgba(255,255,255,0.9);
+    0 8px 32px rgba(0, 0, 0, 0.28),
+    0 2px 8px rgba(0, 188, 212, 0.1),
+    inset 0 1px 0 rgba(255,255,255,0.08);
   animation: fadeIn 0.45s ease;
 }
 
-/* ── Logo ── */
 .auth__logo {
   font-family: var(--font-heading);
   font-size: 1.4rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #0099cc 0%, #00bcd4 100%);
+  background: linear-gradient(135deg, #7de7f5 0%, #4de2c3 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -124,65 +119,60 @@
   display: inline-block;
 }
 
-/* ── Headings ── */
 .auth__title {
   font-size: 1.75rem;
   margin-bottom: 0.4rem;
-  color: #1a3a4a;
+  color: var(--text-primary);
 }
 
 .auth__sub {
-  color: #6a8fa0;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   margin-bottom: 1.75rem;
 }
 
-/* ── Error ── */
 .auth__error {
   padding: 0.75rem 1rem;
-  background: rgba(255, 101, 132, 0.08);
-  border: 1px solid rgba(255, 101, 132, 0.3);
+  background: rgba(255, 107, 138, 0.1);
+  border: 1px solid rgba(255, 107, 138, 0.28);
   border-radius: 10px;
-  color: #e05070;
+  color: #ff9eb1;
   font-size: 0.875rem;
   margin-bottom: 1rem;
 }
 
-/* ── Form inputs (override dark theme) ── */
 .auth .input-label {
-  color: #3a6070;
+  color: var(--text-secondary);
 }
 
 .auth .input-field {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(0, 180, 220, 0.3);
-  color: #1a3a4a;
+  background: rgba(9, 26, 32, 0.9);
+  border-color: rgba(125, 231, 245, 0.18);
+  color: var(--text-primary);
 }
 
 .auth .input-field::placeholder {
-  color: #a0c0cc;
+  color: #9bb7c0;
 }
 
 .auth .input-field:focus {
-  border-color: #00bcd4;
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.15);
+  border-color: #7de7f5;
+  background: rgba(10, 31, 38, 1);
+  box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.2);
 }
 
 .auth .input-icon {
-  color: #5ab0c8;
+  color: #7de7f5;
 }
 
-/* ── Submit button ── */
 .auth .btn--primary {
-  background: linear-gradient(135deg, #0099cc 0%, #00d4b8 100%);
-  box-shadow: 0 4px 15px rgba(0, 180, 212, 0.4);
+  background: linear-gradient(135deg, #00bcd4 0%, #4de2c3 100%);
+  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.35);
 }
 .auth .btn--primary:hover {
-  box-shadow: 0 8px 25px rgba(0, 180, 212, 0.55);
+  box-shadow: 0 8px 25px rgba(0, 188, 212, 0.5);
 }
 
-/* ── Form layout ── */
 .auth__form {
   display: flex;
   flex-direction: column;
@@ -191,13 +181,13 @@
 
 .auth__password-hint {
   margin: 0.4rem 0 0;
-  color: #6a8fa0;
+  color: var(--text-secondary);
   font-size: 0.75rem;
   line-height: 1.4;
 }
 
 .auth__password-hint code {
-  color: #0099cc;
+  color: var(--primary-light);
   font-family: inherit;
   font-weight: 600;
 }
@@ -208,38 +198,37 @@
 
 .auth__forgot a {
   font-size: 0.8rem;
-  color: #5ab0c8;
+  color: #7de7f5;
 }
 
 .auth__forgot a:hover {
-  color: #0099cc;
+  color: #aaf5ff;
 }
 
 .auth__switch {
   text-align: center;
   font-size: 0.875rem;
-  color: #6a8fa0;
+  color: var(--text-secondary);
   margin-top: 1.5rem;
 }
 
 .auth__switch a {
-  color: #0099cc;
+  color: #7de7f5;
   font-weight: 600;
 }
 
-/* ── Demo hint ── */
 .auth__demo {
   margin-top: 1rem;
   padding: 0.6rem 0.75rem;
-  background: rgba(0, 188, 212, 0.07);
-  border: 1px dashed rgba(0, 188, 212, 0.35);
+  background: rgba(0, 188, 212, 0.08);
+  border: 1px dashed rgba(125, 231, 245, 0.38);
   border-radius: 10px;
   font-size: 0.78rem;
-  color: #6a8fa0;
+  color: var(--text-secondary);
   text-align: center;
 }
 
 .auth__demo span {
   font-weight: 600;
-  color: #0099cc;
+  color: #7de7f5;
 }

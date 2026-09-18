@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const destinationSchema = new mongoose.Schema(
     {
         name: {
@@ -9,22 +10,43 @@ const destinationSchema = new mongoose.Schema(
 
         description: {
             type: String,
-            required: true
+            required: true,
+            trim: true
         },
 
         location: {
             type: String,
-            required: true
+            required: true,
+            trim: true
         },
 
         state: {
             type: String,
-            required: true
+            default: ""
+        },
+
+        continent: {
+            type: String,
+            default: ""
         },
 
         country: {
             type: String,
             default: "India"
+        },
+
+        placeId: {
+            type: String,
+            unique: true,
+            sparse: true
+        },
+
+        latitude: {
+            type: Number
+        },
+
+        longitude: {
+            type: Number
         },
 
         images: {
@@ -37,12 +59,33 @@ const destinationSchema = new mongoose.Schema(
             default: []
         },
 
-        bestTimeToVisit: {
-            type: String
+        highlights: {
+            type: [String],
+            default: []
         },
 
-        averageBudget: {
-            type: Number
+        famousPlaces: {
+            type: [
+                {
+                    name: { type: String, trim: true },
+                    description: { type: String, trim: true },
+                    location: { type: String, trim: true },
+                    category: { type: String, trim: true },
+                    bestTime: { type: String, trim: true },
+                    images: { type: [String], default: [] }
+                }
+            ],
+            default: []
+        },
+
+        weather: {
+            type: Object,
+            default: null
+        },
+
+        bestTimeToVisit: {
+            type: String,
+            default: ""
         },
 
         rating: {
