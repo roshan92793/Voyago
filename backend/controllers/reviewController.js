@@ -162,8 +162,8 @@ const updateReview = async (req, res) => {
       });
     }
 
-    // Ownership check
-    if (review.user.toString() !== req.user.userId) {
+    // Ownership check, but admins may update any review
+    if (review.user.toString() !== req.user.userId && req.user.role !== "admin") {
       return res.status(403).json({
         success: false,
         message: "You can only update your own review",
@@ -226,8 +226,8 @@ const deleteReview = async (req, res) => {
       });
     }
 
-    // Ownership check
-    if (review.user.toString() !== req.user.userId) {
+    // Ownership check, but admins may delete any review
+    if (review.user.toString() !== req.user.userId && req.user.role !== "admin") {
       return res.status(403).json({
         success: false,
         message: "You can only delete your own review",

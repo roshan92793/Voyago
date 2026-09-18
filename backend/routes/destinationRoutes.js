@@ -8,6 +8,8 @@ const {
     deleteDestination
 } = require("../controllers/destinationController");
 
+const { searchDestination } = require("../controllers/destinationSearchController");
+
 const authMiddleware = require("../middleware/authMiddleware");
 const adminMiddleware = require("../middleware/adminMiddleware");
 
@@ -20,6 +22,7 @@ const {
 
 const router = express.Router();
 
+router.get("/search", searchDestination);
 router.get("/", getDestinations);
 
 router.get(

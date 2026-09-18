@@ -12,6 +12,7 @@ const wishlistRoutes = require("./routes/wishlistRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const budgetRoutes = require("./routes/budgetRoute");
 const errorMiddleware = require("./middleware/errorMiddleware");
+const imageRoutes = require("./routes/imageRoutes");
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/budget", budgetRoutes);
 app.use("/api/admin", require("./routes/adminRoutes"));
+app.use("/api/destinations", imageRoutes);
 app.use(errorMiddleware);
 
 // Test route
