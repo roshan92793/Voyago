@@ -1,86 +1,85 @@
 import { Link } from 'react-router-dom';
 import { useWishlist } from '../../hooks';
-import { getStars, formatCurrency, truncate } from '../../utils';
 import './DestinationCard.css';
 
 const DestinationCard = ({ destination, className = '' }) => {
   const { isWishlisted, toggleWishlist } = useWishlist();
-  const wishlisted = isWishlisted(destination.id);
-  const { full, half, empty } = getStars(destination.rating);
+  const destinationId = String(destination._id || destination.id || destination.name || 'destination');
+
+  const imageUrl = typeof destination.image === 'string'
+    ? destination.image
+    : destination.images?.[0]?.url || destination.images?.[0] || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80';
+
+  const famousPlaces = Array.isArray(destination.famousPlaces)
+    ? destination.famousPlaces.slice(0, 3)
+    : (Array.isArray(destination.attractions) ? destination.attractions.slice(0, 3) : []);
+
+  const highlights = Array.isArray(destination.highlights) ? destination.highlights.slice(0, 4) : [];
+  const weather = destination.weather || null;
+  const wishlisted = isWishlisted(destinationId);
 
   return (
-    <article className={`dest-card ${className}`} id={`dest-card-${destination.id}`}>
-      {/* Image */}
+    <article className={`dest-card ${className}`} id={`dest-card-${destinationId}`}>
       <div className="dest-card__img-wrap">
-        <img
-          src={destination.image}
-          alt={destination.name}
-          className="dest-card__img"
-          loading="lazy"
-        />
+        <img src={imageUrl} alt={destination.name} className="dest-card__img" loading="lazy" />
         <div className="dest-card__overlay" />
 
-        {/* Wishlist */}
         <button
-          id={`wishlist-btn-${destination.id}`}
+          id={`wishlist-btn-${destinationId}`}
           className={`dest-card__wishlist ${wishlisted ? 'dest-card__wishlist--active' : ''}`}
-          onClick={(e) => { e.preventDefault(); toggleWishlist(destination.id); }}
+          onClick={(e) => { e.preventDefault(); toggleWishlist(destinationId); }}
           aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
         >
           {wishlisted ? '❤️' : '🤍'}
         </button>
 
-        {/* Tags */}
-        <div className="dest-card__tags">
-          {destination.tags.slice(0, 2).map((tag) => (
-            <span key={tag} className="dest-card__tag">{tag}</span>
-          ))}
-        </div>
-
-        {/* Difficulty */}
-        <div className={`dest-card__difficulty dest-card__difficulty--${destination.difficulty?.toLowerCase()}`}>
-          {destination.difficulty}
-        </div>
+        <div className="dest-card__badge">Explore</div>
       </div>
 
-      {/* Body */}
       <div className="dest-card__body">
         <div className="dest-card__header">
           <div>
             <h3 className="dest-card__name">{destination.name}</h3>
-            <p className="dest-card__location">📍 {destination.country}</p>
-          </div>
-          <div className="dest-card__price">
-            <span className="dest-card__price-from">from</span>
-            <span className="dest-card__price-val">{formatCurrency(destination.price)}</span>
+            <p className="dest-card__location">📍 {destination.country || 'Destination'}{destination.state ? `, ${destination.state}` : ''}</p>
           </div>
         </div>
 
-        <p className="dest-card__desc">{truncate(destination.description, 90)}</p>
+        <p className="dest-card__desc">{destination.description || 'Discover this destination through iconic places, local culture, and memorable experiences.'}</p>
 
-        {/* Rating */}
-        <div className="dest-card__rating">
-          <div className="stars">
-            {'★'.repeat(full)}
-            {half ? '½' : ''}
-            {'☆'.repeat(empty)}
-          </div>
-          <span className="dest-card__rating-val">{destination.rating}</span>
-          <span className="dest-card__rating-count">({destination.reviews.toLocaleString()})</span>
+        <div className="dest-card__weather">
+          {weather ? (
+            <>
+              <span className="dest-card__weather-temp">{weather.temperature != null ? `${weather.temperature}°C` : 'Weather update'}</span>
+              <span className="dest-card__weather-condition">{weather.condition || 'Climate update'}</span>
+            </>
+          ) : (
+            <span className="dest-card__weather-condition">Weather currently unavailable</span>
+          )}
         </div>
 
-        <div className="dest-card__meta">
-          <span>🗓 {destination.duration}</span>
-          <span>🌤 {destination.bestTime}</span>
+        <div className="dest-card__highlights">
+          {highlights.length ? highlights.map((highlight) => (
+            <span key={highlight} className="dest-card__highlight">{highlight}</span>
+          )) : <span className="dest-card__highlight">Scenic escapes</span>}
         </div>
 
-        <Link
-          to={`/destination/${destination.id}`}
-          id={`dest-view-btn-${destination.id}`}
-          className="dest-card__cta"
-        >
-          View Details →
-        </Link>
+        <div className="dest-card__places">
+          {famousPlaces.length ? famousPlaces.map((place) => (
+            <div key={`${destination.name}-${place.name}`} className="dest-card__place">
+              <span className="dest-card__place-dot" />
+              <span>{place.name}</span>
+            </div>
+          )) : <div className="dest-card__place"><span className="dest-card__place-dot" /> <span>Popular viewpoints</span></div>}
+        </div>
+
+        <div className="dest-card__actions">
+          <Link to={`/destination/${destinationId}`} id={`dest-view-btn-${destinationId}`} className="dest-card__link">
+            Explore Destination
+          </Link>
+          <Link to="/trip-planner" className="dest-card__plan-btn">
+            Plan a Trip
+          </Link>
+        </div>
       </div>
     </article>
   );

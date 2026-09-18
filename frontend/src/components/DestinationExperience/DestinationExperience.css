@@ -1,0 +1,286 @@
+.destination-experience {
+  width: 100%;
+}
+
+.destination-experience__hero {
+  position: relative;
+  min-height: 430px;
+  max-height: 520px;
+  overflow: hidden;
+}
+
+.destination-experience__hero-image {
+  width: 100%;
+  height: 100%;
+  min-height: 430px;
+  max-height: 520px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.destination-experience__hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5, 12, 22, 0.2) 0%, rgba(5, 12, 22, 0.42) 48%, rgba(5, 12, 22, 0.82) 100%);
+}
+
+.destination-experience__hero-content {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  padding-bottom: 2.25rem;
+  color: #fff;
+}
+
+.destination-experience__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(12, 18, 32, 0.45);
+  border: 1px solid rgba(255,255,255,0.18);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.destination-experience__hero-content h1 {
+  color: #fff;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  margin-bottom: 0.5rem;
+}
+
+.destination-experience__location {
+  color: rgba(255,255,255,0.8);
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+}
+
+.destination-experience__description {
+  color: rgba(255,255,255,0.8);
+  max-width: 760px;
+  font-size: 1rem;
+}
+
+.destination-experience__actions {
+  margin-top: 1.5rem;
+}
+
+.destination-experience__content {
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
+}
+
+.destination-experience__section {
+  margin-bottom: 2.5rem;
+}
+
+.section-header h2 {
+  margin-bottom: 1rem;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.destination-experience__highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.highlight-pill {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.destination-experience__places-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.weather-card {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  padding: 1.15rem 1.35rem 1.25rem;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 22px 40px rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.weather-card__icon {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  border-radius: 1.15rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.9);
+}
+
+.weather-card__content {
+  flex: 1;
+}
+
+.weather-card__label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.76);
+  margin-bottom: 0.45rem;
+  font-weight: 700;
+}
+
+.weather-card h3 {
+  color: #fff;
+  font-size: clamp(2.1rem, 3vw, 3rem);
+  margin: 0;
+  line-height: 1.05;
+  font-weight: 700;
+}
+
+.weather-card__condition {
+  color: rgba(255,255,255,0.84);
+  margin-top: 0.1rem;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.weather-card__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.25rem;
+  color: rgba(255,255,255,0.82);
+  font-size: 0.82rem;
+}
+
+.weather-card__grid span {
+  display: inline-block;
+}
+
+.weather-card--fallback {
+  background: rgba(18, 24, 39, 0.7);
+}
+
+.tourist-place-card {
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.tourist-place-card__image-wrap {
+  height: 210px;
+  overflow: hidden;
+}
+
+.tourist-place-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.tourist-place-card:hover .tourist-place-card__image {
+  transform: scale(1.05);
+}
+
+.tourist-place-card__content {
+  padding: 1rem 1rem 1.1rem;
+}
+
+.tourist-place-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tourist-place-card__header h3 {
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.tourist-place-card__header span {
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(0, 188, 212, 0.12);
+  color: var(--primary-light);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.tourist-place-card__location {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-bottom: 0.7rem;
+}
+
+.tourist-place-card__description {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.tourist-place-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.tourist-place-card__footer small {
+  color: var(--text-muted);
+}
+
+.tourist-place-card__button {
+  background: var(--gradient-primary);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.56rem 0.9rem;
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+@media (max-width: 900px) {
+  .destination-experience__places-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .destination-experience__places-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .weather-card {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .weather-card__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

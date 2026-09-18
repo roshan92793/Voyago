@@ -1,100 +1,146 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { destinations } from '../../data/destinations';
 import ReviewCard from '../../components/ReviewCard/ReviewCard';
+import DestinationExperience from '../../components/DestinationExperience/DestinationExperience';
 import { useWishlist } from '../../hooks';
 import { useAuth } from '../../context/AuthContext';
-import { reviewsAPI } from '../../services/api';
-import { formatCurrency, getStars } from '../../utils';
+import { destinationsAPI, reviewsAPI } from '../../services/api';
+import { destinations as fallbackDestinations } from '../../data/destinations';
+import { getStars } from '../../utils';
 import Error from '../../components/Error/Error';
+import '../../components/DestinationExperience/DestinationExperience.css';
 import './DestinationDetails.css';
+
+const normalizeImage = (image) => {
+  if (!image) return null;
+  if (typeof image === 'string') {
+    return { id: image, url: image, thumbnail: image, description: '', photographer: '', photographerUrl: '' };
+  }
+  if (typeof image?.url === 'string') {
+    return {
+      id: image.id || image.url,
+      url: image.url,
+      thumbnail: image.thumbnail || image.url,
+      description: image.description || '',
+      photographer: image.photographer || '',
+      photographerUrl: image.photographerUrl || ''
+    };
+  }
+  return null;
+};
+
+const isUsableImageUrl = (value) => typeof value === 'string' && /^https?:\/\//i.test(value) && !/example\.com|placehold|dummy/i.test(value);
+
+const normalizeDestination = (item) => {
+  const rawImages = Array.isArray(item.images)
+    ? item.images.filter((image) => isUsableImageUrl(typeof image === 'string' ? image : image?.url))
+    : [];
+  const normalizedImages = rawImages.map(normalizeImage).filter(Boolean);
+  const primaryImage = typeof item.image === 'string' && isUsableImageUrl(item.image)
+    ? item.image
+    : normalizedImages[0]?.url || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80';
+
+  return {
+    ...item,
+    id: item._id || item.id,
+    _id: item._id || item.id,
+    name: item.name || 'Destination',
+    country: item.country || 'India',
+    state: item.state || item.location || '',
+    continent: item.continent || 'Asia',
+    description: item.description || 'Discover this destination.',
+    image: primaryImage,
+    images: normalizedImages.length ? normalizedImages.map((img) => img.url || img) : (item.image ? [item.image] : []),
+    price: item.price ?? item.averageBudget ?? 18000,
+    rating: Number(item.rating ?? 4.5),
+    reviews: item.reviews ?? item.reviewCount ?? 0,
+    tags: item.tags?.length ? item.tags : (item.attractions || []).slice(0, 3),
+    difficulty: item.difficulty || 'Easy',
+    duration: item.duration || '4 days',
+    bestTime: item.bestTime || item.bestTimeToVisit || 'Nov - Feb',
+    highlights: item.highlights || item.attractions || [],
+  };
+};
 
 const DestinationDetails = () => {
   const { id } = useParams();
-  const dest = destinations.find((d) => d.id === +id);
   const { isWishlisted, toggleWishlist } = useWishlist();
   const { isAuthenticated } = useAuth();
+  const [destination, setDestination] = useState(null);
   const [destReviews, setDestReviews] = useState([]);
   const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' });
   const [reviewError, setReviewError] = useState('');
   const [submittingReview, setSubmittingReview] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  if (!dest) return <Error code="404" title="Destination Not Found" message="This destination doesn't exist." />;
-
-  const loadReviews = async () => {
+  const loadReviews = async (destinationId) => {
     try {
-      const response = await reviewsAPI.getByDestination(dest.id);
-      setDestReviews(response.data.reviews);
+      const response = await reviewsAPI.getByDestination(destinationId);
+      setDestReviews(response.data.reviews || []);
     } catch {
       setReviewError('Unable to load reviews. Please try again later.');
     }
   };
 
-  useEffect(() => { loadReviews(); }, [id]);
+  useEffect(() => {
+    const loadDestination = async () => {
+      try {
+        const response = await destinationsAPI.getById(id);
+        const normalized = normalizeDestination(response.data.destination || response.data);
+        setDestination(normalized);
+        await loadReviews(normalized._id || id);
+
+        if (!normalized.images?.length) {
+          const imagesResponse = await destinationsAPI.fetchImages(normalized._id || id);
+          if (imagesResponse.data?.images?.length) {
+            setDestination((prev) => prev ? { ...prev, images: imagesResponse.data.images, image: imagesResponse.data.images[0] } : prev);
+          }
+        }
+      } catch {
+        const fallback = fallbackDestinations.find((item) => String(item.id) === String(id));
+        if (fallback) {
+          setDestination(normalizeDestination(fallback));
+          await loadReviews(String(fallback.id));
+        } else {
+          setDestination(null);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDestination();
+  }, [id]);
 
   const handleReviewSubmit = async (event) => {
     event.preventDefault();
     setReviewError('');
     setSubmittingReview(true);
     try {
-      await reviewsAPI.create({ destinationKey: String(dest.id), rating: Number(reviewForm.rating), comment: reviewForm.comment });
+      await reviewsAPI.create({ destinationKey: String(destination._id || id), rating: Number(reviewForm.rating), comment: reviewForm.comment });
       setReviewForm({ rating: 5, comment: '' });
-      await loadReviews();
+      await loadReviews(destination._id || id);
     } catch (error) {
       setReviewError(error.response?.data?.message || 'Could not submit your review.');
     } finally {
       setSubmittingReview(false);
     }
   };
-  const { full, half, empty } = getStars(dest.rating);
-  const wishlisted = isWishlisted(dest.id);
+
+  if (!loading && !destination) return <Error code="404" title="Destination Not Found" message="This destination doesn't exist." />;
+
+  if (!destination) return null;
+
+  const { full, half, empty } = getStars(destination.rating);
+  const wishlisted = isWishlisted(destination.id);
+  const destinationId = destination._id || destination.id;
 
   return (
     <div className="dest-details">
-      {/* Hero */}
-      <div className="dest-details__hero">
-        <img src={dest.image} alt={dest.name} className="dest-details__hero-img" />
-        <div className="dest-details__hero-overlay" />
-        <div className="dest-details__hero-content">
-          <div className="container">
-            <nav className="breadcrumb" aria-label="Breadcrumb">
-              <Link to="/">Home</Link> / <Link to="/explore">Explore</Link> / <span>{dest.name}</span>
-            </nav>
-            <div className="dest-details__tags">
-              {dest.tags.map((t) => <span key={t} className="dest-card__tag">{t}</span>)}
-            </div>
-            <h1 className="dest-details__name">{dest.name}</h1>
-            <div className="dest-details__meta">
-              <span>📍 {dest.country}</span>
-              <div className="stars">{'★'.repeat(full)}{half ? '½' : ''}{'☆'.repeat(empty)}</div>
-              <span>{dest.rating} ({dest.reviews.toLocaleString()} reviews)</span>
-              <span>🕐 {dest.duration}</span>
-              <span>🌤 Best: {dest.bestTime}</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <DestinationExperience destination={destination} />
 
       <div className="container dest-details__body">
-        {/* Main */}
         <div className="dest-details__main">
-          {/* About */}
-          <section className="dest-details__section">
-            <h2>About {dest.name}</h2>
-            <p>{dest.description}</p>
-          </section>
-
-          {/* Highlights */}
-          <section className="dest-details__section">
-            <h2>Highlights</h2>
-            <div className="dest-details__highlights">
-              {dest.highlights.map((h) => (
-                <div key={h} className="highlight-chip">✨ {h}</div>
-              ))}
-            </div>
-          </section>
-
-          {/* Reviews */}
           <section className="dest-details__section">
             <h2>Traveler Reviews</h2>
             {isAuthenticated && (
@@ -104,7 +150,7 @@ const DestinationDetails = () => {
                   {[5, 4, 3, 2, 1].map((rating) => <option key={rating} value={rating}>{rating} star{rating > 1 ? 's' : ''}</option>)}
                 </select>
                 <label htmlFor="review-comment">Share your experience</label>
-                <textarea id="review-comment" value={reviewForm.comment} onChange={(event) => setReviewForm({ ...reviewForm, comment: event.target.value })} minLength="10" required placeholder={`What did you enjoy about ${dest.name}?`} rows="3" />
+                <textarea id="review-comment" value={reviewForm.comment} onChange={(event) => setReviewForm({ ...reviewForm, comment: event.target.value })} minLength="10" required placeholder={`What did you enjoy about ${destination.name}?`} rows="3" />
                 {reviewError && <p className="dest-details__review-error" role="alert">{reviewError}</p>}
                 <button className="btn btn--primary btn--sm" type="submit" disabled={submittingReview}>{submittingReview ? 'Submitting…' : 'Post review'}</button>
               </form>
@@ -120,51 +166,7 @@ const DestinationDetails = () => {
           </section>
         </div>
 
-        {/* Sidebar */}
-        <aside className="dest-details__sidebar">
-          <div className="dest-details__card">
-            <div className="dest-details__price">
-              <span className="dest-details__price-from">From</span>
-              <span className="dest-details__price-val">{formatCurrency(dest.price)}</span>
-              <span className="dest-details__price-dur">per person · {dest.duration}</span>
-            </div>
-
-            <div className="dest-details__info-list">
-              <div className="dest-details__info-item">
-                <span>📍 Location</span><strong>{dest.country}, {dest.continent}</strong>
-              </div>
-              <div className="dest-details__info-item">
-                <span>🎯 Difficulty</span>
-                <strong className={`diff diff--${dest.difficulty?.toLowerCase()}`}>{dest.difficulty}</strong>
-              </div>
-              <div className="dest-details__info-item">
-                <span>🌤 Best Season</span><strong>{dest.bestTime}</strong>
-              </div>
-              <div className="dest-details__info-item">
-                <span>⏱ Duration</span><strong>{dest.duration}</strong>
-              </div>
-            </div>
-
-            <div className="dest-details__actions">
-              <Link
-                to="/trip-planner"
-                id={`plan-trip-btn-${dest.id}`}
-                className="btn btn--primary btn--lg"
-                style={{ width: '100%', justifyContent: 'center', display: 'flex' }}
-              >
-                ✈️ Plan This Trip
-              </Link>
-              <button
-                id={`wishlist-detail-btn-${dest.id}`}
-                className={`btn btn--${wishlisted ? 'danger' : 'ghost'} btn--lg`}
-                style={{ width: '100%' }}
-                onClick={() => toggleWishlist(dest.id)}
-              >
-                {wishlisted ? '❤️ Wishlisted' : '🤍 Add to Wishlist'}
-              </button>
-            </div>
-          </div>
-        </aside>
+        <aside className="dest-details__sidebar" style={{ display: 'none' }} />
       </div>
     </div>
   );

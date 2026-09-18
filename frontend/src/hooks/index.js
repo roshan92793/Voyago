@@ -35,13 +35,21 @@ export const useLocalStorage = (key, initialValue) => {
  */
 export const useWishlist = () => {
   const [wishlist, setWishlist] = useLocalStorage('voyago_wishlist', []);
-  const isWishlisted = (id) => wishlist.includes(id);
+  const normalizeId = (id) => String(id);
+
+  const isWishlisted = (id) => wishlist.some((item) => normalizeId(item) === normalizeId(id));
+
   const toggleWishlist = (id) => {
-    setWishlist((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-    );
+    const normalizedId = normalizeId(id);
+    setWishlist((prev) => {
+      const safePrev = Array.isArray(prev) ? prev.map((item) => String(item)) : [];
+      return safePrev.includes(normalizedId)
+        ? safePrev.filter((x) => x !== normalizedId)
+        : [...safePrev, normalizedId];
+    });
   };
-  return { wishlist, isWishlisted, toggleWishlist };
+
+  return { wishlist: Array.isArray(wishlist) ? wishlist.map(String) : [], isWishlisted, toggleWishlist };
 };
 
 /**
