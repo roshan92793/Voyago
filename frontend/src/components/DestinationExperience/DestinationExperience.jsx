@@ -37,7 +37,7 @@ const DestinationExperience = ({ destination }) => {
           <WeatherCard weather={destination.weather} destinationName={destination.name} />
         </section>
 
-        <section className="destination-experience__section">
+        <section className="destination-experience__section destination-experience__section--highlights">
           <div className="section-header">
             <h2>Highlights</h2>
           </div>
@@ -48,7 +48,7 @@ const DestinationExperience = ({ destination }) => {
           </div>
         </section>
 
-        <section className="destination-experience__section">
+        <section className="destination-experience__section destination-experience__section--places">
           <div className="section-header">
             <h2>Famous places to explore</h2>
           </div>
