@@ -132,7 +132,7 @@ const getDestinationReviews = async (req, res) => {
 const getAllReviews = async (req, res) => {
   try {
     const reviews = await Review.find()
-      .populate("user", "name")
+      .populate("user", "name email")
       .populate("destination", "name")
       .sort({ createdAt: -1 });
 
