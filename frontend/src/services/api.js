@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+const API_URL = import.meta.env.VITE_API_URL
+  || `${window.location.protocol}//${window.location.hostname}:5001/api`;
 
 const api = axios.create({
   baseURL: API_URL,
@@ -47,11 +48,11 @@ export const destinationsAPI = {
 
 // ── Trips ──────────────────────────────────────
 export const tripsAPI = {
-  getAll:   ()       => api.get('/trips'),
-  getById:  (id)     => api.get(`/trips/${id}`),
-  create:   (data)   => api.post('/trips', data),
-  update:   (id, d)  => api.put(`/trips/${id}`, d),
-  delete:   (id)     => api.delete(`/trips/${id}`),
+  getAll:   ()       => api.get('/trip'),
+  getById:  (id)     => api.get(`/trip/${id}`),
+  create:   (data)   => api.post('/trip', data),
+  update:   (id, d)  => api.put(`/trip/${id}`, d),
+  delete:   (id)     => api.delete(`/trip/${id}`),
 };
 
 // ── Reviews ────────────────────────────────────
