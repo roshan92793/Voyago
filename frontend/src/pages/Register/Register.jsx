@@ -44,6 +44,13 @@ const Register = () => {
 
   return (
     <div className="auth">
+      <aside className="auth__visual" aria-label="A coastal travel destination">
+        <div className="auth__visual-copy">
+          <span>TRAVEL, YOUR WAY</span>
+          <p>Somewhere beautiful is closer than you think.</p>
+          <small>Find it. Plan it. Make it yours.</small>
+        </div>
+      </aside>
       <div className="auth__card">
         <div className="auth__logo">✈️ Voyago</div>
         <h1 className="auth__title">Create account</h1>

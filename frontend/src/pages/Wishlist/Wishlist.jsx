@@ -5,7 +5,7 @@ import './Wishlist.css';
 
 const Wishlist = () => {
   const { wishlist } = useWishlist();
-  const wishlisted = destinations.filter((d) => wishlist.includes(d.id));
+  const wishlisted = destinations.filter((d) => wishlist.includes(String(d.id)));
 
   return (
     <div className="wishlist section-padding" style={{ paddingTop: '7rem' }}>
