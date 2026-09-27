@@ -7,9 +7,13 @@ const Hero = () => (
     <div className="hero__image" aria-hidden="true" />
     <div className="hero__overlay" aria-hidden="true" />
     <div className="container hero__content">
-      <p className="hero__eyebrow">INDIA HOLIDAYS, MADE SIMPLE</p>
-      <h1 className="hero__heading">Find a trip worth looking forward to.</h1>
-      <p className="hero__sub">Discover verified destinations, practical budgets, and ideas for your next break.</p>
+      <p className="hero__eyebrow">MAKE ROOM FOR SOMEWHERE NEW</p>
+      <h1 className="hero__heading">Explore somewhere new. Plan unforgettable journeys.</h1>
+      <p className="hero__sub">Discover destinations, build itineraries, manage your budget, and create trips you’ll remember.</p>
+      <div className="hero__actions">
+        <Link to="/trip-planner" className="hero__action hero__action--primary">Plan Your Trip <span aria-hidden="true">→</span></Link>
+        <Link to="/explore" className="hero__action hero__action--secondary">Explore Destinations</Link>
+      </div>
       <div className="hero__search-card">
         <div className="hero__search-label">Where do you want to go?</div>
         <SearchBar variant="hero" placeholder="Search Goa, Jaipur, Manali, Kerala..." />

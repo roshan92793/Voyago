@@ -51,7 +51,6 @@ const Navbar = () => {
             <>
               <li><NavLink to="/my-trips" onClick={() => setMenuOpen(false)}>My Trips</NavLink></li>
               <li><NavLink to="/wishlist" onClick={() => setMenuOpen(false)}>Wishlist</NavLink></li>
-              <li><NavLink to="/trip-planner" onClick={() => setMenuOpen(false)}>Plan Trip</NavLink></li>
             </>
           )}
           <li><NavLink to="/reviews" onClick={() => setMenuOpen(false)}>Reviews</NavLink></li>
@@ -60,6 +59,7 @@ const Navbar = () => {
 
         {/* Right side */}
         <div className="navbar__right">
+          <Link to="/trip-planner" className="navbar__plan-cta" onClick={() => setMenuOpen(false)}>Plan Trip</Link>
           {isAuthenticated ? (
             <div className="nav-user" onClick={() => setDropdown((p) => !p)}>
               <div className="nav-user__avatar">{getInitials(user?.name)}</div>
