@@ -162,3 +162,30 @@ html:has(.auth)::-webkit-scrollbar-thumb {
   font-weight: 600;
   color: #7de7f5;
 }
+
+/* ── Show / Hide password toggle ── */
+.auth__eye-btn {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+  outline: none;
+}
+
+.auth__eye-btn:hover {
+  color: var(--primary-light);
+}
+
+.auth__eye-btn:focus-visible {
+  box-shadow: 0 0 0 2px rgba(0, 188, 212, 0.45);
+}
