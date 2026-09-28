@@ -1,6 +1,9 @@
 .dest-details {
-  background: radial-gradient(circle at top, rgba(0, 188, 212, 0.06), transparent 30%);
+  background: transparent;
+  position: relative;
 }
+
+
 
 .dest-details__hero {
   position: relative; height: 55vh; min-height: 400px; overflow: hidden;
