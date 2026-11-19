@@ -159,6 +159,8 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Special Romantic Birthday Dedication */}
+
       {/* Reviews */}
       <section className="section-padding">
         <div className="container">
